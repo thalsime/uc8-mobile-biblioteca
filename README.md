@@ -19,6 +19,7 @@ npx expo start
 | Tag | Encontro | O que entra |
 |---|---|---|
 | `aula10` | 10 | O `CartaoLivro` do módulo 2 portado para componentes nativos: `View`, `Text` e `Pressable` no lugar das tags do HTML, `onPress` no lugar de `onClick`, estilo com `StyleSheet.create` e propriedades em camelCase sem unidade; a lista de livros dentro de um `ScrollView` |
+| `aula11` | 11 | Terceiro livro no acervo do exemplo; a lista continua em `ScrollView` com `map` e `key={livro.id}` |
 
 Gates rodados antes de cada tag: `npx tsc --noEmit` e `npx expo-doctor`.
 
