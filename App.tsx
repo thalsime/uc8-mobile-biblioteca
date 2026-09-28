@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { CartaoLivro } from './src/componentes/CartaoLivro';
 import { FormularioLivro, type DadosLivro } from './src/componentes/FormularioLivro';
 import type { Livro } from './src/types/biblioteca';
@@ -22,11 +22,12 @@ export default function App() {
     <View style={estilos.tela}>
       <Text style={estilos.cabecalho}>Acervo</Text>
       <FormularioLivro aoAdicionar={adicionar} />
-      <ScrollView>
-        {livros.map((livro) => (
-          <CartaoLivro key={livro.id} livro={livro} />
-        ))}
-      </ScrollView>
+      <FlatList
+        data={livros}
+        keyExtractor={(livro) => String(livro.id)}
+        renderItem={({ item }) => <CartaoLivro livro={item} />}
+        ListEmptyComponent={<Text>Nenhum livro no acervo.</Text>}
+      />
     </View>
   );
 }
