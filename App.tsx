@@ -1,19 +1,29 @@
+import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { CartaoLivro } from './src/componentes/CartaoLivro';
+import { FormularioLivro, type DadosLivro } from './src/componentes/FormularioLivro';
 import type { Livro } from './src/types/biblioteca';
 
-const acervo: Livro[] = [
+const acervoInicial: Livro[] = [
   { id: 1, titulo: 'Dom Casmurro', autor: 'Machado de Assis', sinopse: 'Romance narrado por Bentinho.', exemplares: 3 },
   { id: 2, titulo: 'Vidas Secas', autor: 'Graciliano Ramos', exemplares: 1 },
   { id: 3, titulo: 'O Cortiço', autor: 'Aluísio Azevedo', exemplares: 5 },
 ];
 
 export default function App() {
+  const [livros, setLivros] = useState<Livro[]>(acervoInicial);
+
+  function adicionar(dados: DadosLivro) {
+    const proximoId = livros.reduce((maior, atual) => Math.max(maior, atual.id), 0) + 1;
+    setLivros([{ id: proximoId, ...dados }, ...livros]);
+  }
+
   return (
     <View style={estilos.tela}>
       <Text style={estilos.cabecalho}>Acervo</Text>
+      <FormularioLivro aoAdicionar={adicionar} />
       <ScrollView>
-        {acervo.map((livro) => (
+        {livros.map((livro) => (
           <CartaoLivro key={livro.id} livro={livro} />
         ))}
       </ScrollView>
