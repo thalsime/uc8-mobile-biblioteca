@@ -25,5 +25,5 @@ npx expo start
 Gates rodados antes de cada tag: `npx tsc --noEmit` e `npx expo-doctor`.
 
 O projeto fica no Expo SDK 57.0.22, a versão do material. O `expo-doctor` aponta a atualização de
-patch disponível (`expo` 57.0.24) e é a única verificação que não passa: a atualização fica para
+patch disponível do SDK 57 (o `expo` mais recente) e é a única verificação que não passa: a atualização fica para
 quando o material mudar de versão.
