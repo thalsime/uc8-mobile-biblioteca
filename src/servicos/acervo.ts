@@ -21,3 +21,7 @@ export function buscarLivro(id: number): Promise<Livro | undefined> {
     setTimeout(() => resolver(acervo.find((livro) => livro.id === id)), 400);
   });
 }
+
+export function proximoId(): number {
+  return acervo.reduce((maior, atual) => Math.max(maior, atual.id), 0) + 1;
+}
