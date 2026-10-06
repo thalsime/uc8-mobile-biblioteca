@@ -22,6 +22,7 @@ npx expo start
 | `aula11` | 11 | Terceiro livro no acervo do exemplo; a lista continua em `ScrollView` com `map` e `key={livro.id}` |
 | `aula12` | 12 | `FormularioLivro` com `TextInput` controlado (`value` e `onChangeText`) e `DadosLivro` exportado; o `App` guarda a lista em `useState` e define o id; a lista passa de `ScrollView` com `map` para `FlatList` com `keyExtractor` e `ListEmptyComponent` |
 | `aula13` | 13 | Serviço `carregarLivros` em `src/servicos/acervo.ts`, que devolve a lista por uma `Promise` depois de 800 ms; o `App` começa com a lista vazia e a carrega ao abrir com `useEffect`, com o estado `carregando` e `ActivityIndicator`; o botão `Recarregar` muda `tentativa`, a dependência do efeito, e a função de limpeza descarta a resposta de uma execução anterior |
+| `aula15` | 15 | React Navigation 7, instalado com `npx expo install`; a lista sai do `App.tsx` para `src/telas/TelaAcervo.tsx`; navegador em pilha no `App.tsx`, com as rotas tipadas em `src/navegacao/tipos.ts`; a `TelaDetalheLivro` recebe o `id` por parâmetro tipado e busca o livro no serviço, que ganha `guardarLivro` e `buscarLivro` |
 
 Gates rodados antes de cada tag: `npx tsc --noEmit` e `npx expo-doctor`.
 
