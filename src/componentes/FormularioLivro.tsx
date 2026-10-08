@@ -1,5 +1,8 @@
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Botao } from './Botao';
+import { Campo } from './Campo';
+import { espacos } from '../tema/tema';
 
 export interface DadosLivro {
   titulo: string;
@@ -15,47 +18,39 @@ export function FormularioLivro({ aoAdicionar }: FormularioLivroProps) {
   const [titulo, setTitulo] = useState('');
   const [autor, setAutor] = useState('');
   const [exemplares, setExemplares] = useState('1');
+  const [tocado, setTocado] = useState(false);
+
+  const tituloVazio = titulo.trim() === '';
+  const erroTitulo = tocado && tituloVazio ? 'Informe o título' : undefined;
+
+  function mudarTitulo(texto: string) {
+    setTocado(true);
+    setTitulo(texto);
+  }
 
   function enviar() {
     const quantidade = Number(exemplares);
     // O formulário não conhece a lista: quem a guarda define o id.
-    aoAdicionar({ titulo, autor, exemplares: quantidade });
+    aoAdicionar({ titulo: titulo.trim(), autor, exemplares: quantidade });
     setTitulo('');
     setAutor('');
     setExemplares('1');
+    setTocado(false);
   }
 
   return (
     <View style={estilos.formulario}>
-      <TextInput
-        style={estilos.campo}
-        placeholder="Título"
-        value={titulo}
-        onChangeText={setTitulo}
-      />
-      <TextInput
-        style={estilos.campo}
-        placeholder="Autor"
-        value={autor}
-        onChangeText={setAutor}
-      />
-      <TextInput
-        style={estilos.campo}
-        placeholder="Exemplares"
-        keyboardType="numeric"
-        value={exemplares}
-        onChangeText={setExemplares}
-      />
-      <Pressable style={estilos.botao} onPress={enviar}>
-        <Text style={estilos.textoBotao}>Adicionar</Text>
-      </Pressable>
+      <Campo rotulo="Título" valor={titulo} aoMudar={mudarTitulo} erro={erroTitulo} />
+      <Campo rotulo="Autor" valor={autor} aoMudar={setAutor} />
+      <Campo rotulo="Exemplares" valor={exemplares} aoMudar={setExemplares} tipoDeTeclado="numeric" />
+      <View style={estilos.acoes}>
+        <Botao titulo="Adicionar" onPress={enviar} desabilitado={tituloVazio} />
+      </View>
     </View>
   );
 }
 
 const estilos = StyleSheet.create({
-  formulario: { marginBottom: 16 },
-  campo: { backgroundColor: '#fff', borderRadius: 6, padding: 10, marginBottom: 8 },
-  botao: { backgroundColor: '#004A8D', borderRadius: 6, padding: 12, alignItems: 'center' },
-  textoBotao: { color: '#fff', fontWeight: 'bold' },
+  formulario: { marginBottom: espacos.md },
+  acoes: { flexDirection: 'row', marginTop: espacos.sm },
 });

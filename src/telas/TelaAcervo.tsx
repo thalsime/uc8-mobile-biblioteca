@@ -1,11 +1,12 @@
 import { useCallback, useState } from 'react';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Botao } from '../componentes/Botao';
 import { useFocusEffect } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { CartaoLivro } from '../componentes/CartaoLivro';
 import type { RotasDaPilha } from '../navegacao/tipos';
 import { carregarLivros } from '../servicos/acervo';
-import { cores, espacos, larguraLarga, raio } from '../tema/tema';
+import { cores, espacos, larguraLarga } from '../tema/tema';
 import type { Livro } from '../types/biblioteca';
 
 type TelaAcervoProps = NativeStackScreenProps<RotasDaPilha, 'Acervo'>;
@@ -41,12 +42,8 @@ export function TelaAcervo({ navigation }: TelaAcervoProps) {
   return (
     <View style={estilos.tela}>
       <View style={estilos.barra}>
-        <Pressable style={estilos.botao} onPress={recarregar}>
-          <Text style={estilos.textoBotao}>Recarregar</Text>
-        </Pressable>
-        <Pressable style={estilos.botao} onPress={() => navigation.navigate('NovoLivro')}>
-          <Text style={estilos.textoBotao}>Novo livro</Text>
-        </Pressable>
+        <Botao titulo="Recarregar" variante="secundario" onPress={recarregar} />
+        <Botao titulo="Novo livro" onPress={() => navigation.navigate('NovoLivro')} />
       </View>
       {carregando ? (
         <View style={estilos.centro}>
@@ -79,8 +76,6 @@ const estilos = StyleSheet.create({
   tela: { flex: 1, backgroundColor: cores.fundo, padding: espacos.md },
   barra: { flexDirection: 'row', gap: espacos.sm, marginBottom: espacos.md },
   centro: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  botao: { flex: 1, backgroundColor: cores.primaria, borderRadius: raio, padding: espacos.sm + espacos.xs, alignItems: 'center' },
-  textoBotao: { color: cores.textoClaro, fontWeight: 'bold' },
   linhaDeColunas: { gap: espacos.sm },
   celula: { flex: 1 },
   detalhes: { color: cores.primaria, fontWeight: 'bold', marginBottom: espacos.md },

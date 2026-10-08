@@ -26,6 +26,7 @@ npx expo start
 | `aula16` | 16 | Navegador de abas (`@react-navigation/bottom-tabs`): a pilha vai para `src/navegacao/PilhaAcervo.tsx` e vira a tela de uma aba; `RotasDasAbas` com `NavigatorScreenParams`; a `TelaSobre` na segunda aba; um só `NavigationContainer`, no `App.tsx` |
 | `aula17` | 17 | Cadastro em tela própria: `TelaNovoLivro` na rota `NovoLivro` da pilha, que entrega o livro ao serviço (`proximoId` em `src/servicos/acervo.ts`) e volta com `navigation.goBack()`; a lista do acervo recarrega ao ganhar foco, com `useFocusEffect` e `useCallback`, sem o aviso de carregamento; aba Busca com tela reservada (`TelaBusca`): são as cinco telas do exemplo |
 | `aula19` | 19 | Tema em `src/tema/tema.ts` (cores, espaçamentos, raio e `larguraLarga`); `CartaoLivro` em flexbox (linha com `flexDirection: 'row', coluna com `flex: 1`, `gap` e a etiqueta de exemplares); a lista do acervo em uma ou duas colunas pela largura da janela (`useWindowDimensions`, `numColumns` com `key` e `columnWrapperStyle`); `TelaSobre` com a janela em dp, a densidade (`PixelRatio.get()`) e a escala da fonte |
+| `aula20` | 20 | Componentes visuais: `Botao` (`Pressable` com estilo em função, variantes primária e secundária, estados pressionado e desabilitado, `accessibilityRole="button"`) e `Campo` (rótulo, `TextInput` e mensagem de erro); `FormularioLivro` com validação visual do título (mensagem só depois de tocado, botão desabilitado com o título vazio); a barra do acervo com `Botao` |
 
 ## Navegação (desde a `aula17`)
 
