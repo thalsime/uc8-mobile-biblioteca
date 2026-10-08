@@ -24,6 +24,21 @@ npx expo start
 | `aula13` | 13 | Serviço `carregarLivros` em `src/servicos/acervo.ts`, que devolve a lista por uma `Promise` depois de 800 ms; o `App` começa com a lista vazia e a carrega ao abrir com `useEffect`, com o estado `carregando` e `ActivityIndicator`; o botão `Recarregar` muda `tentativa`, a dependência do efeito, e a função de limpeza descarta a resposta de uma execução anterior |
 | `aula15` | 15 | React Navigation 7, instalado com `npx expo install`; a lista sai do `App.tsx` para `src/telas/TelaAcervo.tsx`; navegador em pilha no `App.tsx`, com as rotas tipadas em `src/navegacao/tipos.ts`; a `TelaDetalheLivro` recebe o `id` por parâmetro tipado e busca o livro no serviço, que ganha `guardarLivro` e `buscarLivro` |
 | `aula16` | 16 | Navegador de abas (`@react-navigation/bottom-tabs`): a pilha vai para `src/navegacao/PilhaAcervo.tsx` e vira a tela de uma aba; `RotasDasAbas` com `NavigatorScreenParams`; a `TelaSobre` na segunda aba; um só `NavigationContainer`, no `App.tsx` |
+| `aula17` | 17 | Cadastro em tela própria: `TelaNovoLivro` na rota `NovoLivro` da pilha, que entrega o livro ao serviço (`proximoId` em `src/servicos/acervo.ts`) e volta com `navigation.goBack()`; a lista do acervo recarrega ao ganhar foco, com `useFocusEffect` e `useCallback`, sem o aviso de carregamento; aba Busca com tela reservada (`TelaBusca`): são as cinco telas do exemplo |
+
+## Navegação (desde a `aula17`)
+
+| Tela | Onde fica | Aberta por | Parâmetro |
+|---|---|---|---|
+| Acervo | Pilha do acervo, na aba Acervo | Aba Acervo | Nenhum |
+| Detalhe do livro | Pilha do acervo | Toque em "Ver detalhes" num livro | `id` do livro |
+| Novo livro | Pilha do acervo | Botão "Novo livro" na tela do acervo | Nenhum |
+| Busca | Aba Busca | Aba Busca | Nenhum |
+| Sobre | Aba Sobre | Aba Sobre | Nenhum |
+
+Acervo, Busca e Sobre são abas porque são as seções do aplicativo. Detalhe do livro e Novo livro são rotas de pilha
+porque são abertas a partir do acervo. A tela Busca é reservada: recebe conteúdo quando o aplicativo passar a consumir
+dados da rede.
 
 Gates rodados antes de cada tag: `npx tsc --noEmit` e `npx expo-doctor`.
 
