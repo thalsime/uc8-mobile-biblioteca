@@ -38,6 +38,11 @@ export function TelaAcervo({ navigation }: TelaAcervoProps) {
             {estado.origem === 'aparelho' && (
               <Text style={estilos.aviso}>Sem conexão: mostrando os livros guardados no aparelho ({estado.motivo})</Text>
             )}
+            {estado.pendentes.length > 0 && (
+              <Text style={estilos.aviso}>
+                A enviar ({estado.pendentes.length}): {estado.pendentes.map((pendente) => pendente.titulo).join(', ')}
+              </Text>
+            )}
             <FlatList
               key={duasColunas ? 'duas' : 'uma'}
               data={estado.livros}

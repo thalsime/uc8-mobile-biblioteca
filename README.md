@@ -32,6 +32,7 @@ npx expo start
 | `aula24` | 24 | Context para estado global: `src/contexto/AcervoContexto.tsx` com `AcervoProvedor` (carrega uma vez, `recarregar`, `incluir`, `buscar`) e `useAcervo`; `App.tsx` envolvido pelo provedor; lista, cadastro e detalhe lendo do contexto, com uma só leitura da API |
 | `aula26` | 26 | Banco local: `expo-sqlite` instalado; `src/banco/banco.ts` abre `acervo.db` uma vez, cria `livros` com `IF NOT EXISTS` e oferece `listarLocal`, `guardarLocal` (transação: apaga e regrava) e `contarLocal`, com `getAllAsync<LinhaLivro>` e `paraLivro`; o provedor guarda cada carga da nuvem; `TelaSobre` mostra `Guardados no aparelho: N` por `useFocusEffect` |
 | `aula27` | 27 | Cache offline: `EstadoAcervo` com duas formas de `pronto` (`origem: 'nuvem'` e `origem: 'aparelho'` com `motivo`); o `.catch` da carga lê `listarLocal` e mostra a lista do aparelho; `TelaAcervo` com o aviso `Sem conexão: mostrando os livros guardados no aparelho (...)` |
+| `aula28` | 28 | Fila de sincronização: tabela `pendentes` com `listarPendentes`, `guardarPendente` (`lastInsertRowId`) e `removerPendente`; o provedor roda `sincronizar` antes da carga (envia, remove; `ErroDaApi` descarta; sem rede, para) e `incluir` enfileira a falha de rede; `TelaAcervo` com a linha `A enviar (n): ...` |
 
 ## Navegação (desde a `aula17`)
 

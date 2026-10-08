@@ -1,18 +1,18 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import { guardarLocal, listarLocal } from '../banco/banco';
-import { carregarLivros, descreverErro, incluirLivro, type DadosNovoLivro } from '../servicos/acervo';
+import { guardarLocal, guardarPendente, listarLocal, listarPendentes, removerPendente, type Pendente } from '../banco/banco';
+import { ErroDaApi, carregarLivros, descreverErro, incluirLivro, type DadosNovoLivro } from '../servicos/acervo';
 import type { Livro } from '../types/biblioteca';
 
 export type EstadoAcervo =
   | { tipo: 'carregando' }
   | { tipo: 'erro'; mensagem: string }
-  | { tipo: 'pronto'; livros: Livro[]; origem: 'nuvem' }
-  | { tipo: 'pronto'; livros: Livro[]; origem: 'aparelho'; motivo: string };
+  | { tipo: 'pronto'; livros: Livro[]; pendentes: Pendente[]; origem: 'nuvem' }
+  | { tipo: 'pronto'; livros: Livro[]; pendentes: Pendente[]; origem: 'aparelho'; motivo: string };
 
 interface ValorDoAcervo {
   estado: EstadoAcervo;
   recarregar: () => void;
-  incluir: (dados: DadosNovoLivro) => Promise<Livro>;
+  incluir: (dados: DadosNovoLivro) => Promise<void>;
   buscar: (id: number) => Livro | undefined;
 }
 
@@ -25,10 +25,12 @@ export function AcervoProvedor({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelado = false;
     setEstado({ tipo: 'carregando' });
-    carregarLivros()
-      .then((livros) => {
+    sincronizar()
+      .then(() => carregarLivros())
+      .then(async (livros) => {
+        const pendentes = await listarPendentes();
         if (!cancelado) {
-          setEstado({ tipo: 'pronto', livros, origem: 'nuvem' });
+          setEstado({ tipo: 'pronto', livros, pendentes, origem: 'nuvem' });
         }
         guardarLocal(livros).catch((erro: unknown) => {
           console.warn('Não foi possível guardar no aparelho: ' + descreverErro(erro));
@@ -36,13 +38,13 @@ export function AcervoProvedor({ children }: { children: ReactNode }) {
       })
       .catch((erro: unknown) => {
         const motivo = descreverErro(erro);
-        listarLocal()
-          .then((guardados) => {
+        Promise.all([listarLocal(), listarPendentes()])
+          .then(([guardados, pendentes]) => {
             if (cancelado) {
               return;
             }
-            if (guardados.length > 0) {
-              setEstado({ tipo: 'pronto', livros: guardados, origem: 'aparelho', motivo });
+            if (guardados.length > 0 || pendentes.length > 0) {
+              setEstado({ tipo: 'pronto', livros: guardados, pendentes, origem: 'aparelho', motivo });
             } else {
               setEstado({ tipo: 'erro', mensagem: motivo });
             }
@@ -62,10 +64,32 @@ export function AcervoProvedor({ children }: { children: ReactNode }) {
     setTentativa(tentativa + 1);
   }
 
-  async function incluir(dados: DadosNovoLivro): Promise<Livro> {
-    const novo = await incluirLivro(dados);
-    setEstado((atual) => (atual.tipo === 'pronto' ? { ...atual, livros: [...atual.livros, novo] } : atual));
-    return novo;
+  async function sincronizar(): Promise<void> {
+    for (const pendente of await listarPendentes()) {
+      try {
+        await incluirLivro(pendente);
+      } catch (erro: unknown) {
+        if (erro instanceof ErroDaApi) {
+          console.warn('Pendente descartado pela API: ' + descreverErro(erro));
+        } else {
+          return;
+        }
+      }
+      await removerPendente(pendente.id);
+    }
+  }
+
+  async function incluir(dados: DadosNovoLivro): Promise<void> {
+    try {
+      const novo = await incluirLivro(dados);
+      setEstado((atual) => (atual.tipo === 'pronto' ? { ...atual, livros: [...atual.livros, novo] } : atual));
+    } catch (erro: unknown) {
+      if (erro instanceof ErroDaApi) {
+        throw erro;
+      }
+      const pendente = await guardarPendente(dados);
+      setEstado((atual) => (atual.tipo === 'pronto' ? { ...atual, pendentes: [...atual.pendentes, pendente] } : atual));
+    }
   }
 
   function buscar(id: number): Livro | undefined {
