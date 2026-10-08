@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { cores, espacos, raio } from '../tema/tema';
 import type { Livro } from '../types/biblioteca';
 
 interface CartaoLivroProps {
@@ -12,23 +13,33 @@ export function CartaoLivro({ livro, minimoExemplares = 2 }: CartaoLivroProps) {
 
   return (
     <View style={estilos.cartao}>
-      <Text style={estilos.titulo}>{livro.titulo}</Text>
-      <Text style={estilos.autor}>{livro.autor}</Text>
+      <View style={estilos.linha}>
+        <View style={estilos.coluna}>
+          <Text style={estilos.titulo}>{livro.titulo}</Text>
+          <Text style={estilos.autor}>{livro.autor}</Text>
+        </View>
+        <View style={estilos.etiqueta}>
+          <Text style={estilos.textoEtiqueta}>{livro.exemplares}</Text>
+        </View>
+      </View>
       <Pressable onPress={() => setMostrarSinopse(!mostrarSinopse)}>
         <Text style={estilos.acao}>{mostrarSinopse ? 'Esconder sinopse' : 'Ver sinopse'}</Text>
       </Pressable>
       {mostrarSinopse && <Text style={estilos.sinopse}>{livro.sinopse ?? 'Sem sinopse'}</Text>}
-      <Text>{livro.exemplares} exemplares</Text>
       {livro.exemplares < minimoExemplares && <Text style={estilos.alerta}>Poucos exemplares</Text>}
     </View>
   );
 }
 
 const estilos = StyleSheet.create({
-  cartao: { backgroundColor: '#fff', borderRadius: 8, padding: 16, marginBottom: 12 },
-  titulo: { fontSize: 18, fontWeight: 'bold' },
-  autor: { color: '#5B6B7C' },
-  acao: { color: '#004A8D', marginTop: 8 },
-  sinopse: { marginTop: 8 },
-  alerta: { color: '#F7941D', marginTop: 4 },
+  cartao: { backgroundColor: cores.superficie, borderRadius: raio, padding: espacos.md, marginBottom: espacos.sm },
+  linha: { flexDirection: 'row', alignItems: 'flex-start', gap: espacos.sm },
+  coluna: { flex: 1 },
+  titulo: { fontSize: 18, fontWeight: 'bold', color: cores.texto },
+  autor: { color: cores.textoSecundario },
+  etiqueta: { backgroundColor: cores.primaria, borderRadius: raio, paddingHorizontal: espacos.sm, paddingVertical: espacos.xs },
+  textoEtiqueta: { color: cores.textoClaro, fontWeight: 'bold' },
+  acao: { color: cores.primaria, marginTop: espacos.sm },
+  sinopse: { marginTop: espacos.sm, color: cores.texto },
+  alerta: { color: cores.alerta, marginTop: espacos.xs },
 });

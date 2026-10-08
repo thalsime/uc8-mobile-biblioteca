@@ -25,6 +25,7 @@ npx expo start
 | `aula15` | 15 | React Navigation 7, instalado com `npx expo install`; a lista sai do `App.tsx` para `src/telas/TelaAcervo.tsx`; navegador em pilha no `App.tsx`, com as rotas tipadas em `src/navegacao/tipos.ts`; a `TelaDetalheLivro` recebe o `id` por parâmetro tipado e busca o livro no serviço, que ganha `guardarLivro` e `buscarLivro` |
 | `aula16` | 16 | Navegador de abas (`@react-navigation/bottom-tabs`): a pilha vai para `src/navegacao/PilhaAcervo.tsx` e vira a tela de uma aba; `RotasDasAbas` com `NavigatorScreenParams`; a `TelaSobre` na segunda aba; um só `NavigationContainer`, no `App.tsx` |
 | `aula17` | 17 | Cadastro em tela própria: `TelaNovoLivro` na rota `NovoLivro` da pilha, que entrega o livro ao serviço (`proximoId` em `src/servicos/acervo.ts`) e volta com `navigation.goBack()`; a lista do acervo recarrega ao ganhar foco, com `useFocusEffect` e `useCallback`, sem o aviso de carregamento; aba Busca com tela reservada (`TelaBusca`): são as cinco telas do exemplo |
+| `aula19` | 19 | Tema em `src/tema/tema.ts` (cores, espaçamentos, raio e `larguraLarga`); `CartaoLivro` em flexbox (linha com `flexDirection: 'row', coluna com `flex: 1`, `gap` e a etiqueta de exemplares); a lista do acervo em uma ou duas colunas pela largura da janela (`useWindowDimensions`, `numColumns` com `key` e `columnWrapperStyle`); `TelaSobre` com a janela em dp, a densidade (`PixelRatio.get()`) e a escala da fonte |
 
 ## Navegação (desde a `aula17`)
 
