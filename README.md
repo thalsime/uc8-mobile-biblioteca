@@ -30,6 +30,7 @@ npx expo start
 | `aula22` | 22 | Dados na nuvem: `supabase/esquema.sql` (tabela `livros` com RLS, políticas de leitura e inclusão e `grant` ao `anon`), `.env.example` (`EXPO_PUBLIC_SUPABASE_URL` e `EXPO_PUBLIC_SUPABASE_KEY`), seção Configuração neste README; `src/servicos/acervo.ts` lendo e incluindo pela API de dados com `fetch`, cabeçalho `apikey`, resposta como `unknown` conferida por type guard e `POST` com `Prefer: return=representation`; `TelaNovoLivro` inclui pela API e volta |
 | `aula23` | 23 | Estados de tela por união discriminada: `ErroDaApi` com o código e a mensagem do corpo da resposta, `descreverErro(erro: unknown)`; `TelaAcervo` com `EstadoAcervo` (`carregando`, `erro`, `pronto`), `switch` por `tipo` e "Tentar de novo" no erro |
 | `aula24` | 24 | Context para estado global: `src/contexto/AcervoContexto.tsx` com `AcervoProvedor` (carrega uma vez, `recarregar`, `incluir`, `buscar`) e `useAcervo`; `App.tsx` envolvido pelo provedor; lista, cadastro e detalhe lendo do contexto, com uma só leitura da API |
+| `aula26` | 26 | Banco local: `expo-sqlite` instalado; `src/banco/banco.ts` abre `acervo.db` uma vez, cria `livros` com `IF NOT EXISTS` e oferece `listarLocal`, `guardarLocal` (transação: apaga e regrava) e `contarLocal`, com `getAllAsync<LinhaLivro>` e `paraLivro`; o provedor guarda cada carga da nuvem; `TelaSobre` mostra `Guardados no aparelho: N` por `useFocusEffect` |
 
 ## Navegação (desde a `aula17`)
 

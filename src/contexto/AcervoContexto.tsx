@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { guardarLocal } from '../banco/banco';
 import { carregarLivros, descreverErro, incluirLivro, type DadosNovoLivro } from '../servicos/acervo';
 import type { Livro } from '../types/biblioteca';
 
@@ -28,6 +29,9 @@ export function AcervoProvedor({ children }: { children: ReactNode }) {
         if (!cancelado) {
           setEstado({ tipo: 'pronto', livros });
         }
+        guardarLocal(livros).catch((erro: unknown) => {
+          console.warn('Não foi possível guardar no aparelho: ' + descreverErro(erro));
+        });
       })
       .catch((erro: unknown) => {
         if (!cancelado) {
