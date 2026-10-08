@@ -27,6 +27,7 @@ npx expo start
 | `aula17` | 17 | Cadastro em tela própria: `TelaNovoLivro` na rota `NovoLivro` da pilha, que entrega o livro ao serviço (`proximoId` em `src/servicos/acervo.ts`) e volta com `navigation.goBack()`; a lista do acervo recarrega ao ganhar foco, com `useFocusEffect` e `useCallback`, sem o aviso de carregamento; aba Busca com tela reservada (`TelaBusca`): são as cinco telas do exemplo |
 | `aula19` | 19 | Tema em `src/tema/tema.ts` (cores, espaçamentos, raio e `larguraLarga`); `CartaoLivro` em flexbox (linha com `flexDirection: 'row', coluna com `flex: 1`, `gap` e a etiqueta de exemplares); a lista do acervo em uma ou duas colunas pela largura da janela (`useWindowDimensions`, `numColumns` com `key` e `columnWrapperStyle`); `TelaSobre` com a janela em dp, a densidade (`PixelRatio.get()`) e a escala da fonte |
 | `aula20` | 20 | Componentes visuais: `Botao` (`Pressable` com estilo em função, variantes primária e secundária, estados pressionado e desabilitado, `accessibilityRole="button"`) e `Campo` (rótulo, `TextInput` e mensagem de erro); `FormularioLivro` com validação visual do título (mensagem só depois de tocado, botão desabilitado com o título vazio); a barra do acervo com `Botao` |
+| `aula22` | 22 | Dados na nuvem: `supabase/esquema.sql` (tabela `livros` com RLS, políticas de leitura e inclusão e `grant` ao `anon`), `.env.example` (`EXPO_PUBLIC_SUPABASE_URL` e `EXPO_PUBLIC_SUPABASE_KEY`), seção Configuração neste README; `src/servicos/acervo.ts` lendo e incluindo pela API de dados com `fetch`, cabeçalho `apikey`, resposta como `unknown` conferida por type guard e `POST` com `Prefer: return=representation`; `TelaNovoLivro` inclui pela API e volta |
 
 ## Navegação (desde a `aula17`)
 
@@ -47,3 +48,17 @@ Gates rodados antes de cada tag: `npx tsc --noEmit` e `npx expo-doctor`.
 O projeto fica no Expo SDK 57.0.22, a versão do material. O `expo-doctor` aponta a atualização de
 patch disponível do SDK 57 (o `expo` mais recente) e é a única verificação que não passa: a atualização fica para
 quando o material mudar de versão.
+
+## Configuração (desde a `aula22`)
+
+O aplicativo lê a URL do projeto e a chave publicável do Supabase de um arquivo `.env.local`, que não vai
+para o repositório. Copie `.env.example` para `.env.local` e preencha com os valores do **seu** projeto
+(crie o projeto e execute `supabase/esquema.sql` no SQL Editor; o guia do encontro 22 explica cada passo):
+
+```text
+EXPO_PUBLIC_SUPABASE_URL=https://SEU-PROJETO.supabase.co
+EXPO_PUBLIC_SUPABASE_KEY=sb_publishable_SUA-CHAVE
+```
+
+A chave publicável é pública por desenho; o que ela alcança é decidido pelas políticas de RLS do esquema
+(leitura e inclusão em `livros`). A chave secreta e a senha do banco nunca entram no repositório.

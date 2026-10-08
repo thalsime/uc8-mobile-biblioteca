@@ -2,16 +2,15 @@ import { StyleSheet, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FormularioLivro, type DadosLivro } from '../componentes/FormularioLivro';
 import type { RotasDaPilha } from '../navegacao/tipos';
-import { guardarLivro, proximoId } from '../servicos/acervo';
-import type { Livro } from '../types/biblioteca';
+import { incluirLivro } from '../servicos/acervo';
 
 type TelaNovoLivroProps = NativeStackScreenProps<RotasDaPilha, 'NovoLivro'>;
 
 export function TelaNovoLivro({ navigation }: TelaNovoLivroProps) {
   function adicionar(dados: DadosLivro) {
-    const novo: Livro = { id: proximoId(), ...dados };
-    guardarLivro(novo);
-    navigation.goBack();
+    incluirLivro(dados).then(() => {
+      navigation.goBack();
+    });
   }
 
   return (
