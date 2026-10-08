@@ -31,6 +31,7 @@ npx expo start
 | `aula23` | 23 | Estados de tela por união discriminada: `ErroDaApi` com o código e a mensagem do corpo da resposta, `descreverErro(erro: unknown)`; `TelaAcervo` com `EstadoAcervo` (`carregando`, `erro`, `pronto`), `switch` por `tipo` e "Tentar de novo" no erro |
 | `aula24` | 24 | Context para estado global: `src/contexto/AcervoContexto.tsx` com `AcervoProvedor` (carrega uma vez, `recarregar`, `incluir`, `buscar`) e `useAcervo`; `App.tsx` envolvido pelo provedor; lista, cadastro e detalhe lendo do contexto, com uma só leitura da API |
 | `aula26` | 26 | Banco local: `expo-sqlite` instalado; `src/banco/banco.ts` abre `acervo.db` uma vez, cria `livros` com `IF NOT EXISTS` e oferece `listarLocal`, `guardarLocal` (transação: apaga e regrava) e `contarLocal`, com `getAllAsync<LinhaLivro>` e `paraLivro`; o provedor guarda cada carga da nuvem; `TelaSobre` mostra `Guardados no aparelho: N` por `useFocusEffect` |
+| `aula27` | 27 | Cache offline: `EstadoAcervo` com duas formas de `pronto` (`origem: 'nuvem'` e `origem: 'aparelho'` com `motivo`); o `.catch` da carga lê `listarLocal` e mostra a lista do aparelho; `TelaAcervo` com o aviso `Sem conexão: mostrando os livros guardados no aparelho (...)` |
 
 ## Navegação (desde a `aula17`)
 

@@ -34,22 +34,27 @@ export function TelaAcervo({ navigation }: TelaAcervoProps) {
         );
       case 'pronto':
         return (
-          <FlatList
-            key={duasColunas ? 'duas' : 'uma'}
-            data={estado.livros}
-            numColumns={duasColunas ? 2 : 1}
-            columnWrapperStyle={duasColunas ? estilos.linhaDeColunas : undefined}
-            keyExtractor={(livro) => String(livro.id)}
-            renderItem={({ item }) => (
-              <View style={estilos.celula}>
-                <CartaoLivro livro={item} />
-                <Pressable onPress={() => navigation.navigate('DetalheLivro', { id: item.id })}>
-                  <Text style={estilos.detalhes}>Ver detalhes</Text>
-                </Pressable>
-              </View>
+          <>
+            {estado.origem === 'aparelho' && (
+              <Text style={estilos.aviso}>Sem conexão: mostrando os livros guardados no aparelho ({estado.motivo})</Text>
             )}
-            ListEmptyComponent={<Text>Nenhum livro no acervo.</Text>}
-          />
+            <FlatList
+              key={duasColunas ? 'duas' : 'uma'}
+              data={estado.livros}
+              numColumns={duasColunas ? 2 : 1}
+              columnWrapperStyle={duasColunas ? estilos.linhaDeColunas : undefined}
+              keyExtractor={(livro) => String(livro.id)}
+              renderItem={({ item }) => (
+                <View style={estilos.celula}>
+                  <CartaoLivro livro={item} />
+                  <Pressable onPress={() => navigation.navigate('DetalheLivro', { id: item.id })}>
+                    <Text style={estilos.detalhes}>Ver detalhes</Text>
+                  </Pressable>
+                </View>
+              )}
+              ListEmptyComponent={<Text>Nenhum livro no acervo.</Text>}
+            />
+          </>
         );
     }
   }
@@ -70,6 +75,7 @@ const estilos = StyleSheet.create({
   barra: { flexDirection: 'row', gap: espacos.sm, marginBottom: espacos.md },
   centro: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: espacos.sm },
   erro: { color: cores.erro, fontWeight: 'bold' },
+  aviso: { color: cores.alerta, marginBottom: espacos.sm },
   detalheDoErro: { color: cores.textoSecundario, textAlign: 'center' },
   linhaDeColunas: { gap: espacos.sm },
   celula: { flex: 1 },
