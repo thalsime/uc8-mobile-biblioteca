@@ -34,6 +34,7 @@ npx expo start
 | `aula27` | 27 | Cache offline: `EstadoAcervo` com duas formas de `pronto` (`origem: 'nuvem'` e `origem: 'aparelho'` com `motivo`); o `.catch` da carga lê `listarLocal` e mostra a lista do aparelho; `TelaAcervo` com o aviso `Sem conexão: mostrando os livros guardados no aparelho (...)` |
 | `aula28` | 28 | Fila de sincronização: tabela `pendentes` com `listarPendentes`, `guardarPendente` (`lastInsertRowId`) e `removerPendente`; o provedor roda `sincronizar` antes da carga (envia, remove; `ErroDaApi` descarta; sem rede, para) e `incluir` enfileira a falha de rede; `TelaAcervo` com a linha `A enviar (n): ...` |
 | `aula30` | 30 | Qualidade e proteção de dados: `src/erros/erros.ts` (`classificarErro`, `registrarErro`, `ErroDeValidacao`, `ErroDoBanco`); o banco lança `ErroDoBanco` por `noBanco`; o provedor registra cada falha com a origem e segue sem o banco; `TelaNovoLivro` mostra a recusa; `FormularioLivro` valida `exemplares`; `TelaSobre` com `indisponível`; `supabase/esquema.sql` com `revoke update, delete` do `anon` |
+| `aula33` | 33 | Entrega: `docs/roteiro_de_teste.md` (casos C01 a C13, executados no renderizador de teste); `eas.json` com o perfil `preview` (`buildType` `apk`, `distribution` `internal`); `android.package` no `app.json`. O build no EAS não foi executado |
 
 ## Navegação (desde a `aula17`)
 
