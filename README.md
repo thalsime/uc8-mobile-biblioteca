@@ -33,6 +33,7 @@ npx expo start
 | `aula26` | 26 | Banco local: `expo-sqlite` instalado; `src/banco/banco.ts` abre `acervo.db` uma vez, cria `livros` com `IF NOT EXISTS` e oferece `listarLocal`, `guardarLocal` (transação: apaga e regrava) e `contarLocal`, com `getAllAsync<LinhaLivro>` e `paraLivro`; o provedor guarda cada carga da nuvem; `TelaSobre` mostra `Guardados no aparelho: N` por `useFocusEffect` |
 | `aula27` | 27 | Cache offline: `EstadoAcervo` com duas formas de `pronto` (`origem: 'nuvem'` e `origem: 'aparelho'` com `motivo`); o `.catch` da carga lê `listarLocal` e mostra a lista do aparelho; `TelaAcervo` com o aviso `Sem conexão: mostrando os livros guardados no aparelho (...)` |
 | `aula28` | 28 | Fila de sincronização: tabela `pendentes` com `listarPendentes`, `guardarPendente` (`lastInsertRowId`) e `removerPendente`; o provedor roda `sincronizar` antes da carga (envia, remove; `ErroDaApi` descarta; sem rede, para) e `incluir` enfileira a falha de rede; `TelaAcervo` com a linha `A enviar (n): ...` |
+| `aula30` | 30 | Qualidade e proteção de dados: `src/erros/erros.ts` (`classificarErro`, `registrarErro`, `ErroDeValidacao`, `ErroDoBanco`); o banco lança `ErroDoBanco` por `noBanco`; o provedor registra cada falha com a origem e segue sem o banco; `TelaNovoLivro` mostra a recusa; `FormularioLivro` valida `exemplares`; `TelaSobre` com `indisponível`; `supabase/esquema.sql` com `revoke update, delete` do `anon` |
 
 ## Navegação (desde a `aula17`)
 

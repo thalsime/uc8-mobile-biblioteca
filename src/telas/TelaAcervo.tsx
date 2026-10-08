@@ -36,7 +36,7 @@ export function TelaAcervo({ navigation }: TelaAcervoProps) {
         return (
           <>
             {estado.origem === 'aparelho' && (
-              <Text style={estilos.aviso}>Sem conexão: mostrando os livros guardados no aparelho ({estado.motivo})</Text>
+              <Text style={estilos.aviso}>Mostrando os livros guardados no aparelho: {estado.motivo}</Text>
             )}
             {estado.pendentes.length > 0 && (
               <Text style={estilos.aviso}>

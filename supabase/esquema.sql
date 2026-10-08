@@ -21,3 +21,7 @@ insert into public.livros (titulo, autor, sinopse, exemplares) values
   ('Dom Casmurro', 'Machado de Assis', 'Romance narrado por Bentinho.', 3),
   ('Vidas Secas', 'Graciliano Ramos', null, 1),
   ('O Cortiço', 'Aluísio Azevedo', null, 5);
+
+-- Endurecimento: o papel anon só lê e inclui. Apagar e alterar já eram barrados pela RLS (não há política
+-- para isso); o revoke tira também o privilégio que o projeto concede por padrão, e a API passa a recusar.
+revoke update, delete on public.livros from anon;
